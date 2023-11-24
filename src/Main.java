@@ -47,7 +47,7 @@ public class Main {
             return false;
         }
     }
-
+    // TO DO Zistiť ako by sa to dalo lepšie prepracovať...
     /**
      * Metóda priradí číslu ktoré zadal užívatel pozíciu v
      * hracom poli a vráti true pokiaľ je pozícia v poli nastavená
