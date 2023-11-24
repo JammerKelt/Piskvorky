@@ -14,6 +14,9 @@ public class Main {
     /** Premenná v ktorej je uložené kolo hry **/
     public static int round = 1;
 
+    /** Prepravka slúži na priradenie súradníc hracieho poľa **/
+    public static int[] crate = new int[2];
+
     /**
      * Metóda vykreslí hraciu plochu
      */
@@ -33,41 +36,22 @@ public class Main {
     }
 
     /**
-     * Metóda zisťuje či je daný znak v hracom poli prázdny,
-     * ak je prázdny, tak mu priradí hodnotu hráčovho ťahu.
-     * @param i - riadok v hracom poli
-     * @param j - stlpec v hracom poli
-     * @return - vracia true pokiaľ je hracie pole prázdne, a false ak je obsadené
-     */
-    public static boolean isEmpty(int i, int j) {
-        if (charArea[i][j] == ' ') {
-            charArea[i][j] = player;
-            return true;
-        } else {
-            return false;
-        }
-    }
-    // TO DO Zistiť ako by sa to dalo lepšie prepracovať...
-    /**
-     * Metóda priradí číslu ktoré zadal užívatel pozíciu v
-     * hracom poli a vráti true pokiaľ je pozícia v poli nastavená
-     * na užívateľovu hodnotu, ak nie vráti false
+     * Metóda dekóduje číslu ktoré zadal užívatel na pozíciu v
+     * hracom poli a uloží ju do prepravky
      * @param number - číslo, ktoré zadal používateľ
-     * @return - vráti true ak sa miesto v hracom poli nastavilo na hodnotu ktorú hráč zadal
      */
-    public static boolean isSetCharArea(int number) {
-        return switch (number) {
-            case 1 -> isEmpty(0, 0);
-            case 2 -> isEmpty(0, 1);
-            case 3 -> isEmpty(0, 2);
-            case 4 -> isEmpty(1, 0);
-            case 5 -> isEmpty(1, 1);
-            case 6 -> isEmpty(1, 2);
-            case 7 -> isEmpty(2, 0);
-            case 8 -> isEmpty(2, 1);
-            case 9 -> isEmpty(2, 2);
-            default -> false;
-        };
+    public static void assignCoordinates(int number) {
+        switch (number) {
+            case 1 -> {crate[0] = 0; crate[1] = 0;}
+            case 2 -> {crate[0] = 0; crate[1] = 1;}
+            case 3 -> {crate[0] = 0; crate[1] = 2;}
+            case 4 -> {crate[0] = 1; crate[1] = 0;}
+            case 5 -> {crate[0] = 1; crate[1] = 1;}
+            case 6 -> {crate[0] = 1; crate[1] = 2;}
+            case 7 -> {crate[0] = 2; crate[1] = 0;}
+            case 8 -> {crate[0] = 2; crate[1] = 1;}
+            case 9 -> {crate[0] = 2; crate[1] = 2;}
+        }
     }
 
     /**
@@ -90,10 +74,7 @@ public class Main {
             return true; // Výhra na hlavnej diagonále
         }
 
-        if (area[0][2] != ' ' && area[0][2] == area[1][1] && area[1][1] == area[2][0]) {
-            return true; // Výhra na vedľajšej diagonále
-        }
-        return false;
+        return area[0][2] != ' ' && area[0][2] == area[1][1] && area[1][1] == area[2][0]; // Výhra na vedľajšej diagonále
     }
 
     public static void main(String[] args) {
@@ -129,7 +110,14 @@ public class Main {
             try {
                 int number = Integer.parseInt(userInput);
 
-                if (isSetCharArea(number)) {
+                if (number > charArea.length*charArea.length || number < 1) {
+                    throw new Exception("Zadal si číslo ktoré je mimo rozsah 1-9!!!");
+                } else {
+                    assignCoordinates(number);
+                }
+
+                if (charArea[crate[0]][crate[1]] == ' ') {
+                    charArea[crate[0]][crate[1]] = player;
                     // vykreslenie hracej plochy
                     drawArea();
                     // testovanie výhry
@@ -144,11 +132,15 @@ public class Main {
                     }
                     round++;
                 } else {
-                    System.out.println("Táto pozícia je už obsadená alebo si zadal číslo mimo rozsahu!!!");
+                    System.out.println("Táto pozícia je už obsadená!!!");
                 }
 
             } catch (Exception e) {
-                System.out.println("Zadaj číslo alebo q ak chceš skončiť.");
+                if (e instanceof NumberFormatException) {
+                    System.out.println("Zadal si text!!!, Zadávaj iba čísla od 1-9 alebo q pre koniec");
+                } else {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
