@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -79,6 +80,7 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Vytaj v hre PISKVORKY!!!");
+        System.out.println("Hru hraješ tak že po vyzvaní zadáš číslo od 1 po 9");
 
         // naplnenie poľa ' '
         for (char[] chars : charArea) {
