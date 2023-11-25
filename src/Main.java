@@ -79,6 +79,7 @@ public class Main {
     }
 
     public static boolean isEmpty(char[][] area) {
+        System.out.println("Porucha nastala");
         return true;
     }
 
