@@ -78,6 +78,10 @@ public class Main {
         return area[0][2] != ' ' && area[0][2] == area[1][1] && area[1][1] == area[2][0]; // Výhra na vedľajšej diagonále
     }
 
+    public static boolean isEmpty(char[][] area) {
+        return true;
+    }
+
     public static void main(String[] args) {
         System.out.println("Vytaj v hre PISKVORKY!!!");
         System.out.println("Hru hraješ tak že po vyzvaní zadáš číslo od 1 po 9");
