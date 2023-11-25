@@ -78,7 +78,7 @@ public class Main {
         return area[0][2] != ' ' && area[0][2] == area[1][1] && area[1][1] == area[2][0]; // Výhra na vedľajšej diagonále
     }
 
-    public static boolean isEmpty(char[][] area) {
+    public static boolean isEmpty(char[][] area, int number) {
         return true;
     }
 
